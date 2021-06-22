@@ -1,3 +1,4 @@
+local S = minetest.get_translator('vector3')
 local mod = {}
 local vector3 = {}
 vector3.__index = vector3
@@ -57,7 +58,7 @@ local function new(x, y, z)
         v.y = y or 0
         v.z = z or 0
     else
-        error('format error')
+        error(S('format error'))
     end
 
     return setmetatable(v, vector3)
@@ -104,7 +105,7 @@ function vector3:set(x, y, z)
         self.z = z and z or self.z
         return self
     else
-        error('format error')
+        error(S('format error'))
     end
 
 end
@@ -151,7 +152,7 @@ function vector3:dist(v)
     if isvector(v) then
         return math.hypot(self.x - v.x, math.hypot(self.y - v.y, self.z - v.z))
     else
-        error('format error')
+        error(S('format error'))
     end
 end
 
@@ -164,7 +165,7 @@ function vector3:scale(mag)
             return self * (mag / l)
         end
     else
-        error('format error')
+        error(S('format error'))
     end
 end
 
@@ -177,7 +178,7 @@ function vector3:limit(max)
             return self:clone()
         end
     else
-        error('format error')
+        error(S('format error'))
     end
 end
 
@@ -202,7 +203,7 @@ function vector3.__eq(a, b)
     if allvector(a, b) then
         return a.x == b.x and a.y == b.y and a.z == b.z
     else
-        error('format error')
+        error(S('format error'))
     end
 end
 
@@ -217,7 +218,7 @@ function vector3.__add(a, b)
     elseif isnumber(a) and isvector(b) then
         return new(a + b.x, a + b.y, a + b.z)
     else
-        error('format error')
+        error(S('format error'))
     end
 
 end
@@ -233,7 +234,7 @@ function vector3.__sub(a, b)
     elseif isnumber(a) and isvector(b) then
         return new(a - b.x, a - b.y, a - b.z)
     else
-        error('format error')
+        error(S('format error'))
     end
 
 end
@@ -249,7 +250,7 @@ function vector3.__mul(a, b)
     elseif isnumber(a) and isvector(b) then
         return new(a * b.x, a * b.y, a * b.z)
     else
-        error('format error')
+        error(S('format error'))
     end
 
 end
@@ -265,7 +266,7 @@ function vector3.__div(a, b)
     elseif isnumber(a) and isvector(b) then
         return new(a / b.x, a / b.y, a / b.z)
     else
-        error('format error')
+        error(S('format error'))
     end
 
 end
