@@ -131,7 +131,14 @@ function vector3:round()
     return new(floor(self.x + 0.5), floor(self.y + 0.5), floor(self.z + 0.5))
 end
 
-function vector3:apply(f) return new(f(self.x), f(self.y), f(self.z)) end
+function vector3:apply(f)
+    local x, y, z = f(self.x), f(self.y), f(self.z)
+    if allnillornumber(x, y, z) then
+        return new(x, y, z)
+    else
+        error(S('format error'))
+    end
+end
 
 function vector3:offset(a, b, c) return new(self.x + a, self.y + b, self.z + c) end
 
@@ -148,9 +155,9 @@ function vector3:rotate_around(axis, angle)
                sin(angle) * (self:cross(axis))
 end
 
-function vector3:dist(v)
-    if isvector(v) then
-        return math.hypot(self.x - v.x, math.hypot(self.y - v.y, self.z - v.z))
+function vector3:dist(b)
+    if isvector(b) then
+        return math.hypot(self.x - b.x, math.hypot(self.y - b.y, self.z - b.z))
     else
         error(S('format error'))
     end
