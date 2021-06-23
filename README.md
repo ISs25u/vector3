@@ -2,6 +2,7 @@ vector3
 =========================
 
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
+[![ContentDB](https://content.minetest.net/packages/giga-turbo/vector3/shields/downloads/)](https://content.minetest.net/packages/giga-turbo/vector3/)
 
 **3D Vector library with meta functions**
 
