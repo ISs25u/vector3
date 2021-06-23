@@ -2,18 +2,17 @@ local mod = {}
 local vector3 = {}
 vector3.__index = vector3
 
--- local funcs
+-- locals
 
-floor = math.floor
-pi = math.pi
-mrandom = math.random
-sqrt = math.sqrt
+local floor = math.floor
+local pi = math.pi
+local mrandom = math.random
+local sqrt = math.sqrt
 
 if minetest then
     local S = minetest.get_translator('vector3')
 else
     local S = function(str) return str end
-    math.hypot = function(a, b) return sqrt(a * a + b * b) end
 end
 
 -- local funcs
@@ -119,7 +118,9 @@ end
 
 function vector3:clone() return new(self.x, self.y, self.z) end
 
-function vector3:length() return math.hypot(self.x, math.hypot(self.y, self.z)) end
+function vector3:length()
+    return sqrt(self.x * self.x + self.y * self.y + self.z * self.z)
+end
 
 function vector3:norm()
 
@@ -170,7 +171,7 @@ end
 
 function vector3:dist(b)
     if isvector(b) then
-        return math.hypot(self.x - b.x, math.hypot(self.y - b.y, self.z - b.z))
+        return sqrt(self.x * self.x + self.y * self.y + self.z * self.z)
     else
         error(S('format error'))
     end
