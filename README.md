@@ -85,8 +85,8 @@ v1 + v2
 v1 + 10
 ```
 
-#### substraction
-Return the difference of two vectors component wise. If one argument is a number then this number is substracted to each component of the vector.
+#### subtraction
+Return the difference of two vectors component wise. If one argument is a number then this number is subtracted to each component of the vector.
 
 ```lua
 v1 - v2
@@ -112,7 +112,7 @@ v1 / 10
 ## Functions
 
 #### set(x, y, z)
-Sets the `x`,`y` and `z` components of the vector and return it. If a parameter is nil then the corresponding coponent is unchanged.
+Sets the `x`,`y` and `z` components of the vector and return it. If a parameter is nil then the corresponding component is unchanged.
 
 ```lua
 v1:set(4, nil, 7)
@@ -147,7 +147,7 @@ v1:scale(10)
 ```
 
 #### limit(max)
-Returns a new vector wich is scaled to magnitude `max` if its magnitude if greater than `max`.
+Returns a new vector which is scaled to magnitude `max` if its magnitude if greater than `max`.
 
 ```lua
 vector3(10, 20, 30):limit(5)
