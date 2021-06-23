@@ -1,4 +1,3 @@
-local S = minetest.get_translator('vector3')
 local mod = {}
 local vector3 = {}
 vector3.__index = vector3
@@ -8,6 +7,14 @@ vector3.__index = vector3
 floor = math.floor
 pi = math.pi
 mrandom = math.random
+sqrt = math.sqrt
+
+if minetest then
+    local S = minetest.get_translator('vector3')
+else
+    local S = function(str) return str end
+    math.hypot = function(a, b) return sqrt(a * a + b * b) end
+end
 
 -- local funcs
 
@@ -140,7 +147,13 @@ function vector3:apply(f)
     end
 end
 
-function vector3:offset(a, b, c) return new(self.x + a, self.y + b, self.z + c) end
+function vector3:offset(a, b, c)
+    if allnillornumber(a, b, c) then
+        new(self.x + a or 0, self.y + b or 0, self.z + c or 0)
+    else
+        error(S('format error'))
+    end
+end
 
 function vector3:dot(b) return self.x * b.x + self.y * b.y + self.z * b.z end
 
@@ -151,7 +164,7 @@ end
 
 function vector3:rotate_around(axis, angle)
     axis = axis:norm()
-    return cos(angle) * self + (1 - math.cos(angle)) * (self:dot(axis)) * axis +
+    return cos(angle) * self + (1 - cos(angle)) * (self:dot(axis)) * axis +
                sin(angle) * (self:cross(axis))
 end
 
