@@ -111,112 +111,108 @@ v1 / 10
 
 ## Functions
 
-*Notation* `vector3.function_name.(self, params)` *is equivalent to* `v:function_name(params)`
-
-#### vector3.set(self, x, y, z)
+#### set(x, y, z)
 Sets the `x`,`y` and `z` components of the vector and return it. If a parameter is nil then the corresponding coponent is unchanged.
 
 ```lua
 v1:set(4, nil, 7)
 ```
 
-#### vector3.clone(self)
+#### clone()
 Return a new vector which is a copy of the initial vector.
 
 ```lua
 v4 = v1:clone()
 ```
 
-#### vector3.length(self)
+#### length()
 Returns the magnitude of the vector.
 
 ```lua
 v3:length()
 ```
 
-#### vector3.norm(self)
+#### norm()
 Return the corresponding normalized vector (with magnitude one).
 
 ```lua
 v3:norm()
 ```
 
-#### vector3.scale(self, mag)
-Return a new vector which is `self` scaled to magnitude `mag`
+#### scale(mag)
+Return a new vector which is scaled to magnitude `mag`
 
 ```lua
 v1:scale(10)
 ```
 
-#### vector3.limit(self, max)
-Returns a new vector wich is `self` scaled to magnitude `max` if its magnitude if greater than `max`.
+#### limit(max)
+Returns a new vector wich is scaled to magnitude `max` if its magnitude if greater than `max`.
 
 ```lua
 vector3(10, 20, 30):limit(5)
 vector3(1, 2, 3):limit(5)
 ```
 
-#### vector3.floor(self)
+#### floor()
 Return a new vector with the components floored.
 
 ```lua
 v3:floor()
 ```
 
-#### vector3.round(self)
+#### round()
 Return a new vector with the components rounded to the closest integer.
 
 ```lua
 v3:round()
 ```
 
-#### vector3.offset(self, a, b, c)
+#### offset(a, b, c)
 Return a new vector with components `x`, `y`, `z` offset by `a`, `b` and `c`. If a parameter is nil the corresponding component is unchanged.
 
 ```lua
 v2:offset(-1, 3, 2)
 ```
 
-#### vector3.apply(self, f)
-Return a new vector with the function `f`applied to its components.
+#### apply(f)
+Return a new vector with the function `f` applied to its components.
 
 ```lua
 v2:apply(function(x) return x * x end)
 ```
 
-#### vector3.dist(self, b)
-Returns the distance between `self` and `b` (as if they were representing points).
+#### dist(b)
+Returns the distance between the current vector and `b` (as if they were representing points).
 
 ```lua
 v1:dist(v2)
 ```
 
-#### vector3.dot(self, b)
-Returns the dot product of `self` and `b`.
+#### dot(b)
+Returns the dot product of the current vector and `b`.
 
 ```lua
 v1:dot(v2)
 ```
 
-#### vector3.cross(self, b)
-Returns a vector which is the cross product of `self` and `b`.
+#### cross(b)
+Returns a vector which is the cross product of the current vector and `b`.
 
 ```lua
 v1:cross(v2)
 ```
 
-#### vector3.rotate_around(self, axis, angle)
-Returns a new vector which is `self` rotated around `axis` with ``angle.
-
-Returns the dot product of `self` and `b`.
+#### rotate_around(axis, angle)
+Returns a new vector which is the current vector rotated around `axis` with `angle`.
 
 ```lua
 axis = vector3(0, 1, 0)
 v2:rotate_around(axis, math.pi)
 ```
 
-#### vector3.unpack(self)
-Returns the unpacked components of `self`
+#### unpack()
+Returns the unpacked components of the current vector.
 
 ```lua
 x, y, z = v1:unpack()
