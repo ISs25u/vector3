@@ -47,6 +47,26 @@ Creates a vector with a random direction and magnitude of `length` (defaults to 
 v3 = vector3.random()
 ```
 
+## Constants
+
+```lua
+vector3.zero = vector3(0, 0, 0)
+vector3.one = vector3(1, 1, 1)
+vector3.none = -vector3(1, 1, 1)
+vector3.x = vector3(1, 0, 0)
+vector3.y = vector3(0, 1, 0)
+vector3.z = vector3(0, 0, 1)
+vector3.xy = vector3(1, 1, 0)
+vector3.yz = vector3(0, 1, 1)
+vector3.xz = vector3(1, 0, 1)
+vector3.nx = -vector3(1, 0, 0)
+vector3.ny = -vector3(0, 1, 0)
+vector3.nz = -vector3(0, 0, 1)
+vector3.nxy = -vector3(1, 1, 0)
+vector3.nyz = -vector3(0, 1, 1)
+vector3.nxz = -vector3(1, 0, 1)
+```
+
 ## Meta functions
 
 #### print

@@ -292,6 +292,20 @@ end
 
 mod.fromSpherical = fromSpherical
 mod.random = random
+mod.zero = new(0, 0, 0)
+mod.one = new(1, 1, 1)
+mod.x = new(1, 0, 0)
+mod.y = new(0, 1, 0)
+mod.z = new(0, 0, 1)
+mod.xy = new(1, 1, 0)
+mod.yz = new(0, 1, 1)
+mod.xz = new(1, 0, 1)
+mod.nx = -new(1, 0, 0)
+mod.ny = -new(0, 1, 0)
+mod.nz = -new(0, 0, 1)
+mod.nxy = -new(1, 1, 0)
+mod.nyz = -new(0, 1, 1)
+mod.nxz = -new(1, 0, 1)
 
 return setmetatable(mod, {__call = function(_, ...) return new(...) end})
 
