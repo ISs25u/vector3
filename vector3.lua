@@ -145,7 +145,7 @@ end
 
 function vector3:offset(a, b, c)
     if allnillornumber(a, b, c) then
-        new(self.x + (a or 0), self.y + (b or 0), self.z + (c or 0))
+        return new(self.x + (a or 0), self.y + (b or 0), self.z + (c or 0))
     else
         error(S('format error'))
     end
