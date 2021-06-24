@@ -74,6 +74,9 @@ end
 local function fromSpherical(r, theta, phi)
 
     if allnillornumber(r, theta, phi) then
+        --[[
+            due to minetest system coordinate we need toadd pi/2 to phi
+        ]] --
         local r = r or 1
         local theta = theta or pi / 2
         local phi = phi and (phi + pi / 2) or pi / 2
@@ -208,7 +211,7 @@ function vector3:unpack() return self.x, self.y, self.z end
 -- meta
 
 function vector3:__tostring()
-    return '(' .. self.x .. ',' .. self.y .. ',' .. self.z .. ')'
+    return string.format('(%.3g, %.3g, %.3g)', self.x, self.y, self.z)
 end
 
 function vector3.__concat(a, b)

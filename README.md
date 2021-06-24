@@ -29,15 +29,15 @@ w = (5 * u + u:dot(v) * u:cross(v:scale(5))):norm()
 Creates a new vector with components `x`, `y` and `z`. Components defaults to zero.
 
 ```lua
-v0 = vector3()
-v1 = vector3(1,2,3)
+v0 = vector3() -- (0,0,0)
+v1 = vector3(1,2,3) -- (1,2,3)
 ```
 
 #### vector3.fromSpherical(r, theta, phi)
-Creates a new vector from spherical coordinates. `theta` is the polar angle (from the upwards `y` axis) and `phi` the azimut (counting clockwise around `y`, starting from `x`).
+Creates a new vector from spherical coordinates. `theta` is the polar angle (from the upwards `y` axis), `phi` the azimut (counting clockwise around `y`, starting from `x`), and `r` the radius. Default values are `r=1`, `theta=pi/2`, `phi=0` so that the resulting vector is `(1,0,0)`.
 
 ```lua
-v2 = vector3.fromSpherical(10, math.pi / 2, math.pi)
+v2 = vector3.fromSpherical(10, math.pi / 2, math.pi) -- (10, 0, 0)
 ```
 
 #### vector3.random(length)
