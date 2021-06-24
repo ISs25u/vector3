@@ -14,8 +14,6 @@ local S = minetest and minetest.get_translator('vector3') or
 
 -- local funcs
 
--- local function isvector(v) return getmetatable(v) == vector3 end
-
 local function isnumber(n) return type(n) == 'number' end
 
 local function isnilornumber(n) return n == nil or type(n) == 'number' end
@@ -26,6 +24,7 @@ local function allnillornumber(...)
     return true
 end
 
+-- local function isvector(v) return getmetatable(v) == vector3 end
 local function isvector(v)
     return type(v) == 'table' and isnumber(v.x) and isnumber(v.y) and
                isnumber(v.z)
