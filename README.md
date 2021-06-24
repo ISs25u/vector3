@@ -14,7 +14,7 @@ vector3
 2. Create vectors with `vector3(x, y, z)` ;
 3. See available methods below
 
-All functions except `set` create __new vectors__ so that the original vector is not modified. All the functions (except `set` which return the modified vector) return the new vector so that operations can be chained easily.
+All functions create __new vectors__ so that the original vector is not modified. All the functions return the new vector so that operations can be chained easily.
 
 *Example:*
 ```lua
@@ -111,13 +111,6 @@ v1 / 10
 
 ## Functions
 
-#### set(x, y, z)
-Sets the `x`,`y` and `z` components of the vector and return it. If a parameter is nil then the corresponding component is unchanged.
-
-```lua
-v1:set(4, nil, 7)
-```
-
 #### clone()
 Return a new vector which is a copy of the initial vector.
 
@@ -166,6 +159,13 @@ Return a new vector with the components rounded to the closest integer.
 
 ```lua
 v3:round()
+```
+
+#### set(x, y, z)
+Return a new vector with components `x`,`y` and `z`. If a parameter is nil then the corresponding component is unchanged.
+
+```lua
+v1:set(4, nil, 7)
 ```
 
 #### offset(a, b, c)

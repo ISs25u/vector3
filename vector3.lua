@@ -9,21 +9,12 @@ local pi = math.pi
 local mrandom = math.random
 local sqrt = math.sqrt
 
-if minetest then
-    local S = minetest.get_translator('vector3')
-else
-    local S = function(str) return str end
-end
+local S = minetest and minetest.get_translator('vector3') or
+              function(str) return str end
 
 -- local funcs
 
-local function isvector(v) return getmetatable(v) == vector3 end
-
-local function allvector(...)
-    local args = {...}
-    for _, v in ipairs(args) do if not isvector(v) then return false end end
-    return true
-end
+-- local function isvector(v) return getmetatable(v) == vector3 end
 
 local function isnumber(n) return type(n) == 'number' end
 
@@ -32,6 +23,16 @@ local function isnilornumber(n) return n == nil or type(n) == 'number' end
 local function allnillornumber(...)
     local args = {...}
     for _, n in ipairs(args) do if not isnilornumber(n) then return false end end
+    return true
+end
+
+local function isvector(v)
+    return type(v) == 'table' and isnumber(v.x) and isnumber(v.y) and
+               isnumber(v.z)
+end
+local function allvector(...)
+    local args = {...}
+    for _, v in ipairs(args) do if not isvector(v) then return false end end
     return true
 end
 
@@ -102,23 +103,6 @@ end
 
 -- funcs
 
-function vector3:set(x, y, z)
-    if isvector(x) then
-        self.x = x.x
-        self.y = x.y
-        self.z = x.z
-        return self
-    elseif allnillornumber(x, y, z) then
-        self.x = x and x or self.x
-        self.y = y and y or self.y
-        self.z = z and z or self.z
-        return self
-    else
-        error(S('format error'))
-    end
-
-end
-
 function vector3:clone() return new(self.x, self.y, self.z) end
 
 function vector3:length()
@@ -151,6 +135,14 @@ function vector3:apply(f)
     end
 end
 
+function vector3:set(x, y, z)
+    if allnillornumber(x, y, z) then
+        return new(x and x or self.x, y and y or self.y, z and z or self.z)
+    else
+        error(S('format error'))
+    end
+end
+
 function vector3:offset(a, b, c)
     if allnillornumber(a, b, c) then
         new(self.x + a or 0, self.y + b or 0, self.z + c or 0)
@@ -173,8 +165,10 @@ function vector3:rotate_around(axis, angle)
 end
 
 function vector3:dist(b)
+
     if isvector(b) then
-        return sqrt(self.x * self.x + self.y * self.y + self.z * self.z)
+        return sqrt((self.x - b.x) * (self.x - b.x) + (self.y - b.y) *
+                        (self.y - b.y) + (self.z - b.z) * (self.z - b.z))
     else
         error(S('format error'))
     end
