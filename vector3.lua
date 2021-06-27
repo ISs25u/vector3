@@ -14,6 +14,11 @@ local S = minetest and minetest.get_translator('vector3') or
 
 -- local funcs
 
+local function round(num, dec)
+    local mult = 10 ^ (dec or 0)
+    return floor(num * mult + 0.5) / mult
+end
+
 local function isnumber(n) return type(n) == 'number' end
 
 local function isnilornumber(n) return n == nil or type(n) == 'number' end
@@ -121,8 +126,8 @@ end
 
 function vector3:floor() return new(floor(self.x), floor(self.y), floor(self.z)) end
 
-function vector3:round()
-    return new(floor(self.x + 0.5), floor(self.y + 0.5), floor(self.z + 0.5))
+function vector3:round(dec)
+    return new(round(self.x, dec), round(self.y, dec), round(self.z, dec))
 end
 
 function vector3:apply(f)
