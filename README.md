@@ -34,17 +34,45 @@ v1 = vector3(1,2,3) -- (1,2,3)
 ```
 
 #### vector3.fromSpherical(r, theta, phi)
-Creates a new vector from spherical coordinates. `theta` is the polar angle (from the upwards `y` axis), `phi` the azimut (counting clockwise around `y`, starting from `x`), and `r` the radius. Default values are `r=1`, `theta=pi/2`, `phi=0` so that the resulting vector is `(1,0,0)`.
+Creates a new vector from spherical coordinates. `theta` is the polar angle (from the upwards `y` axis), `phi` the azimut (counting clockwise around `y`, starting from `x`), and `r` the radius. Default values are `r=1`, `theta=pi/2`, `phi=0`.
 
 ```lua
 v2 = vector3.fromSpherical(10, math.pi / 2, math.pi) -- (10, 0, 0)
 ```
 
-#### vector3.random(length)
-Creates a vector with a random direction and magnitude of `length` (defaults to 1).
+#### vector3.fromCylindrical(r, phi, y)
+Creates a new vector from cylindrical coordinates. `r` is the radius, `phi` is the azimut angle (counting clockwise around `y`, starting from `x`) and `y` the height. Default values are `r=1`, `phi=0` and `y=1`.
 
 ```lua
-v3 = vector3.random()
+v21 = vector3.fromCylindrical(10, math.pi / 2, 5) -- (0, 5, 10)
+```
+
+#### vector3.fromPolar(r, phi)
+Creates a new vector from polar coordinates. `r` is the radius and `phi` the angle (counting clockwise around `y`, starting from `x`), and . Default values are `r=1` and `phi=0`.
+
+```lua
+v22 = vector3.fromPolar(6, - math.pi / 2) -- (0, 0, -6)
+```
+
+#### vector3.srandom(a, b)
+Creates a vector with random spherical coordinates and with `r = math.random(a,b)`. 
+
+```lua
+v3 = vector3.srandom()
+```
+
+#### vector3.crandom(a, b, c, d)
+Creates a vector with random cylindrical coordinates and with `r = math.random(a,b)` and `y = math.random(a,b)`.
+
+```lua
+v31 = vector3.crandom(0, 10, 5, 15)
+```
+
+#### vector3.prandom(a, b)
+Creates a vector with random polar coordinates and with `r = math.random(a,b)`. 
+
+```lua
+v32 = vector3.prandom()
 ```
 
 ## Constants
