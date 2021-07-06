@@ -95,13 +95,135 @@ local function fromSpherical(r, theta, phi)
 
 end
 
-local function random(length)
+local function fromCylindrical(r, phi, y)
 
-    local length = isnumber(length) and length or 1
+    if allnillornumber(r, phi, y) then
+        --[[
+            due to minetest system coordinate we need toadd pi/2 to phi
+        ]] --
+        local r = r or 1
+        local phi = phi and (phi + pi / 2) or pi / 2
+
+        local x = r * sin(phi)
+        local y = y or 1
+        local z = -r * cos(phi)
+
+        return new(x, y, z)
+    end
+
+end
+
+local function fromPolar(r, phi)
+
+    if allnillornumber(r, phi) then
+        --[[
+            due to minetest system coordinate we need toadd pi/2 to phi
+        ]] --
+        local r = r or 1
+        local phi = phi and (phi + pi / 2) or pi / 2
+
+        local x = r * sin(phi)
+        local y = 0
+        local z = -r * cos(phi)
+
+        return new(x, y, z)
+    end
+
+end
+
+local function srandom(a, b)
+
+    local ta = type(a)
+    local tb = type(b)
+
+    local r
+    if ta == 'nil' then
+        if tb == 'nil' then
+            r = mrandom()
+        elseif tb == 'number' then
+            r = mrandom(b)
+        end
+    elseif ta == 'number' then
+        if tb == 'nil' then
+            r = mrandom(a)
+        elseif tb == 'number' then
+            r = mrandom(a, b)
+        end
+    end
+
     local theta = mrandom() * pi
     local phi = mrandom() * 2 * pi
 
-    return fromSpherical(length, theta, phi)
+    return fromSpherical(r, theta, phi)
+
+end
+
+local function crandom(a, b, c, d)
+
+    local ta = type(a)
+    local tb = type(b)
+    local tc = type(c)
+    local td = type(d)
+
+    local r
+    if ta == 'nil' then
+        if tb == 'nil' then
+            r = mrandom()
+        elseif tb == 'number' then
+            r = mrandom(b)
+        end
+    elseif ta == 'number' then
+        if tb == 'nil' then
+            r = mrandom(a)
+        elseif tb == 'number' then
+            r = mrandom(a, b)
+        end
+    end
+
+    local y
+    if tc == 'nil' then
+        if td == 'nil' then
+            y = mrandom()
+        elseif td == 'number' then
+            y = mrandom(d)
+        end
+    elseif tc == 'number' then
+        if td == 'nil' then
+            y = mrandom(c)
+        elseif td == 'number' then
+            y = mrandom(c, d)
+        end
+    end
+
+    local phi = mrandom() * 2 * pi
+
+    return fromCylindrical(r, phi, y)
+
+end
+
+local function prandom(a, b)
+
+    local ta = type(a)
+    local tb = type(b)
+
+    local r
+    if ta == 'nil' then
+        if tb == 'nil' then
+            r = mrandom()
+        elseif tb == 'number' then
+            r = mrandom(b)
+        end
+    elseif ta == 'number' then
+        if tb == 'nil' then
+            r = mrandom(a)
+        elseif tb == 'number' then
+            r = mrandom(a, b)
+        end
+    end
+
+    local phi = mrandom() * 2 * pi
+
+    return fromPolar(r, phi)
 
 end
 
@@ -296,7 +418,11 @@ end
 -- export
 
 mod.fromSpherical = fromSpherical
-mod.random = random
+mod.fromCylindrical = fromCylindrical
+mod.fromPolar = fromPolar
+mod.srandom = srandom
+mod.crandom = crandom
+mod.prandom = prandom
 mod.zero = new(0, 0, 0)
 mod.one = new(1, 1, 1)
 mod.x = new(1, 0, 0)
@@ -313,4 +439,3 @@ mod.nyz = -new(0, 1, 1)
 mod.nxz = -new(1, 0, 1)
 
 return setmetatable(mod, {__call = function(_, ...) return new(...) end})
-
