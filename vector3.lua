@@ -40,6 +40,23 @@ local function allvector(...)
     return true
 end
 
+local function circle_sampling(r)
+    while true do
+        local x = mrandom() * 2 * r - r
+        local z = mrandom() * 2 * r - r
+        if x * x + z * z < r * r then return x, z end
+    end
+end
+
+local function sphere_sampling(r)
+    while true do
+        local x = mrandom() * 2 * r - r
+        local y = mrandom() * 2 * r - r
+        local z = mrandom() * 2 * r - r
+        if x * x + y * y + z * z < r * r then return x, y, z end
+    end
+end
+
 local function sin(x)
     if x % math.pi == 0 then
         return 0
@@ -141,20 +158,19 @@ local function srandom(a, b)
         if tb == 'nil' then
             r = mrandom()
         elseif tb == 'number' then
-            r = mrandom(b)
+            r = mrandom() * b
         end
     elseif ta == 'number' then
         if tb == 'nil' then
-            r = mrandom(a)
+            r = mrandom() * a
         elseif tb == 'number' then
-            r = mrandom(a, b)
+            r = mrandom() * (b - a) + a
         end
     end
 
-    local theta = mrandom() * pi
-    local phi = mrandom() * 2 * pi
+    x, y, z = sphere_sampling(r)
 
-    return fromSpherical(r, theta, phi)
+    return new(x, y, z)
 
 end
 
@@ -170,13 +186,13 @@ local function crandom(a, b, c, d)
         if tb == 'nil' then
             r = mrandom()
         elseif tb == 'number' then
-            r = mrandom(b)
+            r = mrandom() * b
         end
     elseif ta == 'number' then
         if tb == 'nil' then
-            r = mrandom(a)
+            r = mrandom() * a
         elseif tb == 'number' then
-            r = mrandom(a, b)
+            r = mrandom() * (b - a) + a
         end
     end
 
@@ -185,19 +201,19 @@ local function crandom(a, b, c, d)
         if td == 'nil' then
             y = mrandom()
         elseif td == 'number' then
-            y = mrandom(d)
+            y = mrandom() * d
         end
     elseif tc == 'number' then
         if td == 'nil' then
-            y = mrandom(c)
+            y = mrandom() * c
         elseif td == 'number' then
-            y = mrandom(c, d)
+            y = mrandom() * (d - c) + c
         end
     end
 
-    local phi = mrandom() * 2 * pi
+    x, z = circle_sampling(r)
 
-    return fromCylindrical(r, phi, y)
+    return new(x, y, z)
 
 end
 
@@ -211,19 +227,19 @@ local function prandom(a, b)
         if tb == 'nil' then
             r = mrandom()
         elseif tb == 'number' then
-            r = mrandom(b)
+            r = mrandom() * b
         end
     elseif ta == 'number' then
         if tb == 'nil' then
-            r = mrandom(a)
+            r = mrandom() * a
         elseif tb == 'number' then
-            r = mrandom(a, b)
+            r = mrandom() * (b - a) + a
         end
     end
 
-    local phi = mrandom() * 2 * pi
+    x, z = circle_sampling(r)
 
-    return fromPolar(r, phi)
+    return new(x, 0, z)
 
 end
 
