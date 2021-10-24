@@ -40,20 +40,95 @@ local function allvector(...)
     return true
 end
 
-local function circle_sampling(r)
-    while true do
-        local x = mrandom() * 2 * r - r
-        local z = mrandom() * 2 * r - r
-        if x * x + z * z < r * r then return x, z end
+local function circle_sampling(r1, r2)
+    local tr1 = type(r1)
+    local tr2 = type(r2)
+    if tr1 == 'nil' then
+        if tr2 == 'nil' then
+            while true do
+                local x = mrandom() * 2 - 1
+                local z = mrandom() * 2 - 1
+                if x * x + z * z < 1 then return x, z end
+            end
+        elseif tr2 == 'number' then
+            local tmp1 = 2 * r2
+            local tmp2 = r2 * r2
+            while true do
+                local x = mrandom() * tmp1 - r2
+                local z = mrandom() * tmp1 - r2
+                if x * x + z * z < tmp2 then return x, z end
+            end
+        end
+    elseif tr1 == 'number' then
+        if tr2 == 'nil' then
+            local tmp1 = 2 * r1
+            local tmp2 = r1 * r1
+            while true do
+                local x = mrandom() * tmp1 - r1
+                local z = mrandom() * tmp1 - r1
+                if x * x + z * z < tmp2 then return x, z end
+            end
+        elseif tr2 == 'number' then
+            local tmp1 = 2 * r2
+            local tmp2 = r1 * r1
+            local tmp3 = r2 * r2
+            while true do
+                local x = mrandom() * tmp1 - r2
+                local z = mrandom() * tmp1 - r2
+                local d = x * x + z * z
+                if d >= tmp2 and d < tmp3 then return x, z end
+            end
+        end
     end
 end
 
-local function sphere_sampling(r)
-    while true do
-        local x = mrandom() * 2 * r - r
-        local y = mrandom() * 2 * r - r
-        local z = mrandom() * 2 * r - r
-        if x * x + y * y + z * z < r * r then return x, y, z end
+local function sphere_sampling(r1, r2)
+    local tr1 = type(r1)
+    local tr2 = type(r2)
+    if tr1 == 'nil' then
+        if tr2 == 'nil' then
+            while true do
+                local x = mrandom() * 2 - 1
+                local y = mrandom() * 2 - 1
+                local z = mrandom() * 2 - 1
+                if x * x + y * y + z * z < 1 then return x, y, z end
+            end
+        elseif tr2 == 'number' then
+            local tmp1 = 2 * r2
+            local tmp2 = r2 * r2
+            while true do
+                local x = mrandom() * tmp1 - r2
+                local y = mrandom() * tmp1 - r2
+                local z = mrandom() * tmp1 - r2
+                if x * x + y * y + z * z < tmp2 then
+                    return x, y, z
+                end
+            end
+        end
+    elseif tr1 == 'number' then
+        if tr2 == 'nil' then
+            local tmp1 = 2 * r1
+            local tmp2 = r1 * r1
+            while true do
+                local x = mrandom() * tmp1 - r1
+                local y = mrandom() * tmp1 - r1
+                local z = mrandom() * tmp1 - r1
+                if x * x + y * y + z * z < tmp2 then
+                    return x, y, z
+                end
+            end
+        elseif tr2 == 'number' then
+            local tmp1 = 2 * r2
+            local tmp2 = r1 * r1
+            local tmp3 = r2 * r2
+            while true do
+                local x = mrandom() * tmp1 - r2
+                local y = mrandom() * tmp1 - r2
+                local z = mrandom() * tmp1 - r2
+                local d2 = x * x + y * y + z * z
+                if d2 >= tmp2 and d2 < tmp3 then return x, y, z end
+            end
+        end
     end
 end
 
@@ -149,27 +224,7 @@ local function fromPolar(r, phi)
 end
 
 local function srandom(a, b)
-
-    local ta = type(a)
-    local tb = type(b)
-
-    local r
-    if ta == 'nil' then
-        if tb == 'nil' then
-            r = mrandom()
-        elseif tb == 'number' then
-            r = mrandom() * b
-        end
-    elseif ta == 'number' then
-        if tb == 'nil' then
-            r = mrandom() * a
-        elseif tb == 'number' then
-            r = mrandom() * (b - a) + a
-        end
-    end
-
-    x, y, z = sphere_sampling(r)
-
+    x, y, z = sphere_sampling(a, b)
     return new(x, y, z)
 
 end
@@ -181,20 +236,7 @@ local function crandom(a, b, c, d)
     local tc = type(c)
     local td = type(d)
 
-    local r
-    if ta == 'nil' then
-        if tb == 'nil' then
-            r = mrandom()
-        elseif tb == 'number' then
-            r = mrandom() * b
-        end
-    elseif ta == 'number' then
-        if tb == 'nil' then
-            r = mrandom() * a
-        elseif tb == 'number' then
-            r = mrandom() * (b - a) + a
-        end
-    end
+    x, z = circle_sampling(a, b)
 
     local y
     if tc == 'nil' then
@@ -211,36 +253,13 @@ local function crandom(a, b, c, d)
         end
     end
 
-    x, z = circle_sampling(r)
-
     return new(x, y, z)
 
 end
 
 local function prandom(a, b)
-
-    local ta = type(a)
-    local tb = type(b)
-
-    local r
-    if ta == 'nil' then
-        if tb == 'nil' then
-            r = mrandom()
-        elseif tb == 'number' then
-            r = mrandom() * b
-        end
-    elseif ta == 'number' then
-        if tb == 'nil' then
-            r = mrandom() * a
-        elseif tb == 'number' then
-            r = mrandom() * (b - a) + a
-        end
-    end
-
-    x, z = circle_sampling(r)
-
+    x, z = circle_sampling(a, b)
     return new(x, 0, z)
-
 end
 
 -- funcs
