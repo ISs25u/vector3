@@ -69,14 +69,27 @@ local function circle_sampling(r1, r2)
                 if x * x + z * z < tmp2 then return x, z end
             end
         elseif tr2 == 'number' then
-            local tmp1 = 2 * r2
-            local tmp2 = r1 * r1
-            local tmp3 = r2 * r2
-            while true do
-                local x = mrandom() * tmp1 - r2
-                local z = mrandom() * tmp1 - r2
-                local d = x * x + z * z
-                if d >= tmp2 and d < tmp3 then return x, z end
+            if r1 ~= r2 then
+                local tmp1 = 2 * r2
+                local tmp2 = r1 * r1
+                local tmp3 = r2 * r2
+                while true do
+                    local x = mrandom() * tmp1 - r2
+                    local z = mrandom() * tmp1 - r2
+                    local d = x * x + z * z
+                    if d >= tmp2 and d < tmp3 then
+                        return x, z
+                    end
+                end
+            else
+                while true do
+                    local x = mrandom() * 2 - 1
+                    local z = mrandom() * 2 - 1
+                    if x + z ~= 0 then
+                        f = r1 / sqrt(x * x + z * z)
+                        return x * f, z * f
+                    end
+                end
             end
         end
     end
@@ -118,15 +131,29 @@ local function sphere_sampling(r1, r2)
                 end
             end
         elseif tr2 == 'number' then
-            local tmp1 = 2 * r2
-            local tmp2 = r1 * r1
-            local tmp3 = r2 * r2
-            while true do
-                local x = mrandom() * tmp1 - r2
-                local y = mrandom() * tmp1 - r2
-                local z = mrandom() * tmp1 - r2
-                local d2 = x * x + y * y + z * z
-                if d2 >= tmp2 and d2 < tmp3 then return x, y, z end
+            if r1 ~= r2 then
+                local tmp1 = 2 * r2
+                local tmp2 = r1 * r1
+                local tmp3 = r2 * r2
+                while true do
+                    local x = mrandom() * tmp1 - r2
+                    local y = mrandom() * tmp1 - r2
+                    local z = mrandom() * tmp1 - r2
+                    local d2 = x * x + y * y + z * z
+                    if d2 >= tmp2 and d2 < tmp3 then
+                        return x, y, z
+                    end
+                end
+            else
+                while true do
+                    local x = mrandom() * 2 - 1
+                    local y = mrandom() * 2 - 1
+                    local z = mrandom() * 2 - 1
+                    if x + y + z ~= 0 then
+                        local f = r1 / sqrt(x * x + y * y + z * z)
+                        return x * f, y * f, z * f
+                    end
+                end
             end
         end
     end
